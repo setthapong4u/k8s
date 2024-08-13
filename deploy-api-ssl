@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: api-ssl
+  name: api-ssl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-ssl
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: api-ssl
+    spec:
+      containers:
+      - image: setthapong/api-ssl
+        name: api-ssl
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-ssl-service
+  labels:
+    app: api-ssl
+spec:
+  type: NodePort
+  selector:
+    app: api-ssl
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 30500
